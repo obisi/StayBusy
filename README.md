@@ -3,7 +3,7 @@
 Tsoha 2018 loppukesä: Liikunnanseurantasovellus.
 
 Kuvaus:
-Selaimessa toimiva harjoitustietokanta lenkkeilylle ja kuntosaliharjoittelulle. Käyttäjä voi selata juoksemiaan juoksuja, tekemiään kuntosaliharjoituksia ja hakemaan dataa näistä, kuten esimerkiksi juoksunopeuden kehittyminen tai teoreettisen maksimin kasvu penkkipunneruksessa.
+Selaimessa toimiva harjoitustietokanta lenkkeilylle ja kuntosaliharjoittelulle. Käyttäjä voi selata lisäämiään juoksuja tai kuntosaliharjoituksia, sekä hakemaan dataa niistä. Esimerkiksi selaamaan lenkkien pituuksien kehitystä, tai penkkipunneruksen teoreettisen maksimin kasvamista.
 
 
 
