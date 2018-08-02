@@ -10,7 +10,7 @@ class juoksu:
         self.aika = str(datetime.timedelta(seconds=sekunnit))
         self.juoksija = juoksija
 
-tietoja = "Juoksusi: "
+tietoja = "Malli, miten juoksut listataan tulevaisuudessa: "
 
 linkit = ["Yksi linkki", "Toinen linkki", "Kolmas linkki"]
 
