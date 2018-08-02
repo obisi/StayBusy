@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Juoksut listattuna</title>
+  </head>
+
+  <body>
+      <ul>
+  <li><a href="/"> Etusivu</li>
+	<li><a href="{{ url_for('juoksut_index') }}">Listaa juoksut</a></li>
+	<li><a href="{{ url_for('juoksut_form') }}">Lisää juoksu</a></li>
+      </ul>
+
+  <body>
+    {% block body %}
+    <p>
+      content
+    </p>
+    {% endblock %}
+  </body>
+</html>

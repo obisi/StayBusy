@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Päivämäärä</th>
+      <th>Matka</th>
+      <th>Aika</th>
+    </tr>
+    {% for juoksu in juoksut %}
+    <tr>
+      <td>{{ juoksu.pvm }}</td>
+      <td>{{ juoksu.matka }}</td>
+      <td>{{ juoksu.aika }} </td>
+      <td>
+         <a href= "{{ url_for('juoksu_updateform', juoksu_id = juoksu.id) }}"><button>Muokkaa</button></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
