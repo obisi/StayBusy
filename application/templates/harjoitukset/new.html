@@ -5,28 +5,82 @@
     <table>
         <tr>
           <td>
-        Päivämäärä
+        {{ form.pvm.label }}
+          </td>
+          <td> (pp.kk.vv)</td>
+          <td>
+        {{ form.pvm }}
           </td>
           <td>
-        <input type="text" name="pvm"/>
+            <ul>
+              {% for error in form.pvm.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
           </td>
         </tr>
         <tr>
           <td>
-        Matka (Metreinä)
+        {{ form.matka.label}}
+          </td>
+          <td> (metreinä)</td>
+          <td>
+            {{ form.matka}}
           </td>
           <td>
-            <input type="text" name="matka"/>
+            <ul>
+              {% for error in form.matka.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
           </td>
         </tr>
         <tr>
         <td>
-            Aika (Minuutteina)
+            {{ form.tunnit.label}}
         </td>
         <td>
-            <input type="text" name="aika"/>
+            {{ form.tunnit }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.tunnit.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
         </td>
         </tr>
+        <tr>
+          <td>
+              {{ form.minuutit.label}}
+          </td>
+          
+          <td>
+              {{ form.minuutit }}
+          </td>
+          <td>
+            <ul>
+              {% for error in form.minuutit.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          </tr>
+          <tr>
+            <td>
+                {{ form.sekunnit.label}}
+            </td>
+            <td>
+                {{ form.sekunnit }}
+            </td>
+            <td>
+              <ul>
+                {% for error in form.sekunnit.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            </tr>
         <tr>
           <td colspan="2">
         <input type="submit" value="Lisää juoksu"/>

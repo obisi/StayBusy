@@ -7,7 +7,6 @@
       <th>Matka</th>
       <th>Aika</th>
     </tr>
-    {% for juoksu in juoksut %}
     <tr>
       <td>{{ juoksu.pvm }}</td>
       <td>{{ juoksu.matkaString }}</td>
@@ -17,15 +16,10 @@
          
       </td>
       <td>
-        <a href= "{{ url_for('juoksu_single', juoksu_id = juoksu.id) }}"><button>Lisätietoja</button></a>
-        
-     </td>
-      <td>
         <form method="POST" action="{{ url_for('juoksu_delete', juoksu_id = juoksu.id) }}">
           <input type="submit" value="Poista"/>
 	      </form>
       </td>
     </tr>
-    {% endfor %}
   </table>
 {% endblock %}
