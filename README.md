@@ -9,6 +9,10 @@ Esimerkiksi:
 * Juostut kilometrit tietyllä aikavälillä
 * Penkkipunneruksen teoreettisen maksimin kasvamista.
 
+Tietokantaan tulee kaksi CRUD-taulua, kuntosaliharjoitukset ja juoksut. Monesta moneen suhde tulee taulujen kuntosaliharjoitus ja kuntosaliliike välille.
+
+Sovelluksessa on mahdollisuus kirjautua, ja luoda uusi käyttäjä. Sovellukseen on luotu valmiiksi käyttäjä hello salasanalla world.
+
 
 
 [Heroku](https://staybisi.herokuapp.com)
