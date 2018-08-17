@@ -29,8 +29,8 @@ from application.auth import views
 
 from application.auth.models import User
 from os import urandom
-#app.config["SECRET_KEY"] = urandom(32)
-app.config["SECRET_KEY"] = 'supersecret'
+app.config["SECRET_KEY"] = urandom(32)
+#app.config["SECRET_KEY"] = 'supersecret'
 
 from flask_login import LoginManager
 login_manager = LoginManager()
