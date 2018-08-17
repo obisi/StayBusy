@@ -8,27 +8,28 @@ import os
 if os.environ.get("HEROKU"):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tasks.db"    
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///harjoitukset.db"    
     app.config["SQLALCHEMY_ECHO"] = True
 
-
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///harjoitukset.db"
-app.config["SQLALCHEMY_ECHO"] = True
 
 db = SQLAlchemy(app)
 
 
 from application import views
 
-from application.harjoitukset import models
+from application.juoksuharjoitukset import models
+from application import models
+from application.kuntosaliharjoitukset import models
+
 from application.harjoitukset import views
+
 
 from application.auth import models
 from application.auth import views
 
 from application.auth.models import User
 from os import urandom
-# app.config["SECRET_KEY"] = urandom(32)
+#app.config["SECRET_KEY"] = urandom(32)
 app.config["SECRET_KEY"] = 'supersecret'
 
 from flask_login import LoginManager

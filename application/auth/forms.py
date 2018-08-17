@@ -9,9 +9,9 @@ class LoginForm(FlaskForm):
         csrf = False
 
 class UserForm(FlaskForm):
-    name = StringField("Name", [validators.Length(min=2, message="Vähintään 2 merkkiä pitkä")])
-    username = StringField("Username", [validators.Length(min=2, message="Vähintään 2 merkkiä pitkä")])
-    password = PasswordField("Password", [validators.Length(min=5, message="Vähintään 5 merkkiä pitkä")])
+    name = StringField("Name", [validators.Length(min=2, max=50, message="Vähintään 2 merkkiä pitkä")])
+    username = StringField("Username", [validators.Length(min=2,max=30, message="Vähintään 2 merkkiä pitkä")])
+    password = PasswordField("Password", [validators.Length(min=5,max=30, message="Vähintään 5 merkkiä pitkä")])
     
   
     class Meta:

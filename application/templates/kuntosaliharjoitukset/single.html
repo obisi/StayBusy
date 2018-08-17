@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Päivämäärä</th>
+      <th>Matka</th>
+      <th>Aika</th>
+    </tr>
+    <tr>
+      <td>{{ sali.pvmString }}</td>
+      <td>{{ sali.aikaString }} </td>
+      <td>
+         <a href= "{{ url_for('sali_updateform', sali_id = sali.id) }}"><button>Muokkaa</button></a>
+         
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('sali_delete', sali_id = sali.id) }}">
+          <input type="submit" value="Poista"/>
+	      </form>
+      </td>
+    </tr>
+  </table>
+{% endblock %}

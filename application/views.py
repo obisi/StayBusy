@@ -2,28 +2,16 @@ import datetime
 from flask import Flask, render_template
 app = Flask(__name__)
 from application import app
+from application.auth.models import User
+from flask_login import login_required, current_user
 
-class juoksu:
-    def __init__(self, pvm, metrit, sekunnit, juoksija):
-        self.pvm = pvm
-        self.matka = str(round(metrit / 1000, 2)) + " km"
-        self.aika = str(datetime.timedelta(seconds=sekunnit))
-        self.juoksija = juoksija
-
-tietoja = "Malli, miten juoksut listataan tulevaisuudessa: "
-
-linkit = ["Yksi linkki", "Toinen linkki", "Kolmas linkki"]
-
-juoksut = []
-
-juoksut.append(juoksu("10.7.2018", 6000, 3600, "Matti"))
-juoksut.append(juoksu("13.7.2018", 7000, 3600, "Matti"))
-juoksut.append(juoksu("16.7.2018", 8000, 3600, "Matti"))
 
 @app.route("/")
 def hello():
-    return render_template("index.html")
+    juoksu = User.pisin_juoksu()
+    juoksu=juoksu[0]
+    juoksuOma = User.pisin_juoksu_oma(current_user.id)
+    juoksuOma = juoksuOma[0]
+    return render_template("index.html", juoksu = juoksu["matkaString"], omajuoksu=juoksuOma["matkaString"])
 
-@app.route("/juoksudata")
-def content():
-    return render_template("juoksudata.html",tietoja=tietoja, linkit=linkit, juoksut=juoksut)
+

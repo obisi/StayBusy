@@ -1,9 +1,37 @@
 {% extends "layout.html" %}
-
+  
 {% block body %}
+<p> Painamalla kerran "Etsi harjoituksia" lomakkeet tulevat esille. Bugin syytä etsitään. </p>
+<form method="POST" action="{{ url_for('pvmhaku') }}">
+  <table>
+    <div class="form-group">
+    {{ form.pvmEka.label }}
+    {{ form.pvmEka }}
+        <ul>
+          {% for error in form.pvmEka.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="form-group">
+        {{ form.pvmToka.label}}
+        {{ form.pvmToka }}
+      <ul>
+        {% for error in form.pvmToka.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <tr>
+          <td colspan="2">
+        <input type="submit" value="Etsi harjoituksia"/>
+          </td>
+        </tr>
+    </table>
+</form>
 
   <table>
-<thhead>Juoksut:</thhead>
+    <thhead>Juoksut:</thhead>
 
     <tr>
       <th>Päivämäärä</th>
