@@ -59,7 +59,8 @@ class User(Base):
     def kaikki_juoksut(kayttaja_id):
         stmt = text("SELECT Juoksu.id, Juoksu.pvmstring, Juoksu.matkastring, Juoksu.aikastring FROM Juoksu"
                      " WHERE Juoksu.account_id = :kayttaja_id"
-                     " GROUP BY Juoksu.matkastring").params(kayttaja_id=kayttaja_id)
+                     " GROUP BY Juoksu.matkastring"
+                     " GROUP BY Juoksu.id").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
         response = []
@@ -70,7 +71,8 @@ class User(Base):
     @staticmethod
     def kaikki_salikerrat(kayttaja_id):
         stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikaString FROM Salikerta"
-                     " WHERE Salikerta.account_id = :kayttaja_id").params(kayttaja_id=kayttaja_id)
+                     " WHERE Salikerta.account_id = :kayttaja_id"
+                     " GROUP BY Salikerta.id ").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
         response = []
@@ -87,7 +89,8 @@ class User(Base):
 
         stmt = text("SELECT Juoksu.id, Juoksu.pvmstring, Juoksu.matkastring, Juoksu.aikaString, Juoksu.pvm FROM Juoksu"
                      " WHERE Juoksu.account_id = :kayttaja_id AND Juoksu.pvm >= :pvmEka"
-                     " AND Juoksu.pvm <= :pvmToka").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
+                     " AND Juoksu.pvm <= :pvmToka"
+                     " GROUP BY Juoksu.id").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
         res = db.engine.execute(stmt)
 
         responseJ = []
@@ -97,7 +100,8 @@ class User(Base):
         
         stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikaString, Salikerta.pvm FROM Salikerta"
                      " WHERE Salikerta.account_id = :kayttaja_id AND Salikerta.pvm >= :pvmEka"
-                     " AND Salikerta.pvm <= :pvmToka").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
+                     " AND Salikerta.pvm <= :pvmToka"
+                     " GROUP BY Salikerta.id ").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
         res = db.engine.execute(stmt)
 
         responseS = []
