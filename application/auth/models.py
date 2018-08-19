@@ -46,7 +46,7 @@ class User(Base):
     def pisin_juoksu_oma(kayttaja_id):
         stmt = text("SELECT MAX(Juoksu.matka), Juoksu.matkastring FROM Juoksu" 
         " WHERE Juoksu.account_id = :kayttaja_id"
-        " GROUP BY Juoksu.matka").params(kayttaja_id = kayttaja_id)
+        " GROUP BY Juoksu.matkastring").params(kayttaja_id = kayttaja_id)
         res = db.engine.execute(stmt)
         response = []
         for row in res:
@@ -59,7 +59,7 @@ class User(Base):
     def kaikki_juoksut(kayttaja_id):
         stmt = text("SELECT Juoksu.id, Juoksu.pvmstring, Juoksu.matkastring, Juoksu.aikastring FROM Juoksu"
                      " WHERE Juoksu.account_id = :kayttaja_id"
-                     " GROUP BY Juoksu.matka").params(kayttaja_id=kayttaja_id)
+                     " GROUP BY Juoksu.matkastring").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
         response = []
