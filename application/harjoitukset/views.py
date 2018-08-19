@@ -70,12 +70,12 @@ def juoksu_edit(juoksu_id):
     if not form.validate():
         return render_template("juoksuharjoitukset/edit.html", j=j, form = form)
 
-    j.pvmString =  str(form.pvm.data).replace('-', '.')
+    j.pvmstring =  str(form.pvm.data).replace('-', '.')
     j.pvm = form.pvm.data
     j.matka = form.matka.data
     j.aika = form.tunnit.data * 3600 + form.minuutit.data * 60 + form.sekunnit.data
-    j.aikaString = str(datetime.timedelta(seconds=j.aika))
-    j.matkaString = str(round(j.matka / 1000, 2)) + " km"
+    j.aikastring = str(datetime.timedelta(seconds=j.aika))
+    j.matkastring = str(round(j.matka / 1000, 2)) + " km"
 
     db.session().commit()
     return redirect(url_for("harjoitukset_index"))
@@ -141,10 +141,10 @@ def sali_edit(sali_id):
     if not form.validate():
         return render_template("kuntosaliharjoitukset/edit.html", sali=sali, form = form)
 
-    sali.pvmString =  str(form.pvm.data).replace('-', '.')
+    sali.pvmstring =  str(form.pvm.data).replace('-', '.')
     sali.pvm = form.pvm.data
     sali.aika = form.tunnit.data * 3600 + form.minuutit.data * 60 + form.sekunnit.data
-    sali.aikaString = str(datetime.timedelta(seconds=sali.aika))
+    sali.aikastring = str(datetime.timedelta(seconds=sali.aika))
 
     db.session().commit()
     return redirect(url_for("harjoitukset_index"))

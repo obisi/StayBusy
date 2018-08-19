@@ -14,8 +14,8 @@ import datetime
 ) """
 
 class Salikerta(Harjoitus):
-    pvmString = db.Column(db.String(10), nullable=False)
-    aikaString = db.Column(db.String(20), nullable=False)
+    pvmstring = db.Column(db.String(10), nullable=False)
+    aikastring = db.Column(db.String(20), nullable=False)
 
     
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
@@ -25,6 +25,6 @@ class Salikerta(Harjoitus):
     def __init__(self, pvm, tunnit, minuutit, sekunnit):
         sec = int(tunnit) * 3600 + int(minuutit) * 60 + sekunnit
         self.pvm=pvm
-        self.pvmString = str(pvm).replace('-', '.')
+        self.pvmstring = str(pvm).replace('-', '.')
         self.aika = sec
-        self.aikaString = str(datetime.timedelta(seconds=sec))
+        self.aikastring = str(datetime.timedelta(seconds=sec))

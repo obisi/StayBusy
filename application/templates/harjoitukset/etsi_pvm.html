@@ -40,9 +40,9 @@
     </tr>
     {% for juoksu in juoksut %}
     <tr>
-      <td>{{ juoksu.pvmString }}</td>
-      <td>{{ juoksu.matkaString }}</td>
-      <td>{{ juoksu.aikaString }} </td>
+      <td>{{ juoksu.pvmstring }}</td>
+      <td>{{ juoksu.matkastring }}</td>
+      <td>{{ juoksu.aikastring }} </td>
       <td>
          <a href= "{{ url_for('juoksu_updateform', juoksu_id = juoksu.id) }}"><button>Muokkaa</button></a>
          
@@ -69,7 +69,7 @@
     {% for sali in salit %}
     <tr>
       <td>{{ sali.pvmString }}</td>
-      <td>{{ sali.aikaString }} </td>
+      <td>{{ sali.aikastring }} </td>
       <td>
          <a href= "{{ url_for('sali_updateform', sali_id = sali.id) }}"><button>Muokkaa</button></a>
          
