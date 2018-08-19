@@ -7,8 +7,9 @@ from application.auth.models import User
 
 @app.route("/")
 def hello():
-    juoksu = User.pisin_juoksu()
-    juoksu=juoksu[0]
-    return render_template("index.html", juoksu = juoksu["matkastring"])
+    #juoksu = User.pisin_juoksu()
+    #juoksu=juoksu[0]
+    return render_template("index.html")
+    #return render_template("index.html", juoksu = juoksu["matkastring"])
 
 
