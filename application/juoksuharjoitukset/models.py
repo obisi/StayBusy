@@ -7,7 +7,7 @@ class Juoksu(Harjoitus):
     pvmString = db.Column(db.String(10), nullable=False)
     matka = db.Column(db.Integer, nullable=False)
     aikaString = db.Column(db.String(20), nullable=False)
-    matkaString = db.Column(db.String(20), nullable=False)
+    matkaString = db.Column(db.String(1500), nullable=False)
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
                            nullable=False)
