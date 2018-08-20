@@ -69,14 +69,14 @@ class User(Base):
     
     @staticmethod
     def kaikki_salikerrat(kayttaja_id):
-        stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikaString FROM Salikerta"
+        stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikastring FROM Salikerta"
                      " WHERE Salikerta.account_id = :kayttaja_id"
                      " GROUP BY Salikerta.id ").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
-            response.append({"id":row[0], "pvmstring":row[1], "aikaString":row[2]})
+            response.append({"id":row[0], "pvmstring":row[1], "aikastring":row[2]})
         return response
 
 
@@ -94,10 +94,10 @@ class User(Base):
 
         responseJ = []
         for row in res:
-            responseJ.append({"id":row[0], "pvmstring":row[1], "matkastring":row[2], "aikaString":row[3], "pvm":row[4]})  
+            responseJ.append({"id":row[0], "pvmstring":row[1], "matkastring":row[2], "aikastring":row[3], "pvm":row[4]})  
 
         
-        stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikaString, Salikerta.pvm FROM Salikerta"
+        stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikastring, Salikerta.pvm FROM Salikerta"
                      " WHERE Salikerta.account_id = :kayttaja_id AND Salikerta.pvm >= :pvmEka"
                      " AND Salikerta.pvm <= :pvmToka"
                      " GROUP BY Salikerta.id ").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
@@ -105,5 +105,5 @@ class User(Base):
 
         responseS = []
         for row in res:
-            responseS.append({"id":row[0], "pvmstring":row[1], "aikaString":row[2], "pvm":row[3]})
+            responseS.append({"id":row[0], "pvmstring":row[1], "aikastring":row[2], "pvm":row[3]})
         return responseJ, responseS
