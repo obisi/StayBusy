@@ -59,7 +59,6 @@ class User(Base):
     def kaikki_juoksut(kayttaja_id):
         stmt = text("SELECT Juoksu.id, Juoksu.pvmstring, Juoksu.matkastring, Juoksu.aikastring FROM Juoksu"
                      " WHERE Juoksu.account_id = :kayttaja_id"
-                     " GROUP BY Juoksu.matkastring"
                      " GROUP BY Juoksu.id").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
