@@ -12,6 +12,7 @@ class User(Base):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False, unique=True)
     password = db.Column(db.String(144), nullable=False)
+    role = db.Column(db.String(144), nullable=False)
 
     juoksut = db.relationship("Juoksu", backref='account', lazy=True)
     harjoitukset = db.relationship("Salikerta", backref='account', lazy=True)
@@ -20,6 +21,7 @@ class User(Base):
         self.name = name
         self.username = username
         self.password = password
+        self.role = "USER"
   
     def get_id(self):
         return self.id
@@ -35,48 +37,48 @@ class User(Base):
 
     @staticmethod
     def pisin_juoksu():
-        stmt = text("SELECT MAX(Juoksu.matka), Juoksu.matkastring FROM Juoksu")
+        stmt = text("SELECT MAX(Juoksu.matka) FROM Juoksu")
         res = db.engine.execute(stmt)
         response = []
         for row in res:
-            response.append({"matka":row[0], "matkastring":row[1]})
+            response.append({"matka":row[0]})
         return response
 
     @staticmethod
     def pisin_juoksu_oma(kayttaja_id):
-        stmt = text("SELECT MAX(Juoksu.matka), Juoksu.matkastring FROM Juoksu" 
+        stmt = text("SELECT MAX(Juoksu.matka) FROM Juoksu" 
         " WHERE Juoksu.account_id = :kayttaja_id"
-        " GROUP BY Juoksu.matkastring").params(kayttaja_id = kayttaja_id)
+        " GROUP BY Juoksu.matka").params(kayttaja_id = kayttaja_id)
         res = db.engine.execute(stmt)
         response = []
         for row in res:
-            response.append({"matka":row[0], "matkastring":row[1]})
+            response.append({"matka":row[0]})
         return response
 
     
 
     @staticmethod
     def kaikki_juoksut(kayttaja_id):
-        stmt = text("SELECT Juoksu.id, Juoksu.pvmstring, Juoksu.matkastring, Juoksu.aikastring FROM Juoksu"
+        stmt = text("SELECT Juoksu.id, Juoksu.pvm, Juoksu.matka, Juoksu.aika FROM Juoksu"
                      " WHERE Juoksu.account_id = :kayttaja_id"
                      " GROUP BY Juoksu.id").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
-            response.append({"id":row[0], "pvmstring":row[1], "matkastring":row[2], "aikastring":row[3]})
+            response.append({"id":row[0], "pvm":row[1], "matka":row[2], "aika":row[3]})
         return response
     
     @staticmethod
     def kaikki_salikerrat(kayttaja_id):
-        stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikastring FROM Salikerta"
+        stmt = text("SELECT Salikerta.id, Salikerta.pvm, Salikerta.aika FROM Salikerta"
                      " WHERE Salikerta.account_id = :kayttaja_id"
                      " GROUP BY Salikerta.id ").params(kayttaja_id=kayttaja_id)
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
-            response.append({"id":row[0], "pvmstring":row[1], "aikastring":row[2]})
+            response.append({"id":row[0], "pvm":row[1], "aika":row[2]})
         return response
 
 
@@ -84,9 +86,8 @@ class User(Base):
     def kaikki_harjoitukset_pvm(kayttaja_id, pvmEka, pvmToka):
         if pvmEka == None or pvmToka == None:
             return [],[]
-        format_str = '%Y-%m-%d'
 
-        stmt = text("SELECT Juoksu.id, Juoksu.pvmstring, Juoksu.matkastring, Juoksu.aikaString, Juoksu.pvm FROM Juoksu"
+        stmt = text("SELECT Juoksu.id, Juoksu.pvm, Juoksu.matka, Juoksu.aika FROM Juoksu"
                      " WHERE Juoksu.account_id = :kayttaja_id AND Juoksu.pvm >= :pvmEka"
                      " AND Juoksu.pvm <= :pvmToka"
                      " GROUP BY Juoksu.id").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
@@ -94,10 +95,9 @@ class User(Base):
 
         responseJ = []
         for row in res:
-            responseJ.append({"id":row[0], "pvmstring":row[1], "matkastring":row[2], "aikastring":row[3], "pvm":row[4]})  
-
-        
-        stmt = text("SELECT Salikerta.id, Salikerta.pvmstring, Salikerta.aikastring, Salikerta.pvm FROM Salikerta"
+            responseJ.append({"id":row[0], "pvm":row[1], "matka":row[2], "aika":row[3]})  
+     
+        stmt = text("SELECT Salikerta.id, Salikerta.pvm, Salikerta.aika FROM Salikerta"
                      " WHERE Salikerta.account_id = :kayttaja_id AND Salikerta.pvm >= :pvmEka"
                      " AND Salikerta.pvm <= :pvmToka"
                      " GROUP BY Salikerta.id ").params(kayttaja_id=kayttaja_id, pvmEka = pvmEka, pvmToka=pvmToka)
@@ -105,5 +105,5 @@ class User(Base):
 
         responseS = []
         for row in res:
-            responseS.append({"id":row[0], "pvmstring":row[1], "aikastring":row[2], "pvm":row[3]})
+            responseS.append({"id":row[0], "pvm":row[1], "aika":row[2]})
         return responseJ, responseS

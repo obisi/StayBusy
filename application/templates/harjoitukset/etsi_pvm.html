@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
   
 {% block body %}
-<p> Painamalla kerran "Etsi harjoituksia" lomakkeet tulevat esille. Bugin syytä etsitään. </p>
+
 <form method="POST" action="{{ url_for('pvmhaku') }}">
   <table>
     <div class="form-group">
@@ -24,7 +24,7 @@
     </div>
     <tr>
           <td colspan="2">
-        <input type="submit" value="Etsi harjoituksia"/>
+        <input type="submit" value="Hae"/>
           </td>
         </tr>
     </table>

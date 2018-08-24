@@ -5,12 +5,20 @@
   Voit seurata harjoitteluasi!
 </p>
 
+{% if current_user.is_authenticated %}
 <p>
     Pisin juoksu tietokannassa motivaatioksi:
 </p>
 <tr>
     <td> {{ juoksu }}</td>
-</tr>
+</tr> 
+<p>
+    Sinun pisin juoksusi:
+</p>
+<tr>
+    <td> {{ omajuoksu }}</td>
+</tr> 
+{% endif %}
 
 
 {% endblock %}
