@@ -6,9 +6,9 @@ Sovellus vaatii toimiakseen python3 sekä sqlite3. Python tarvitsee lisäksi lis
 
 1. Lataa repository koneellesi githubista. 
 2. Avaa komentorivi, ja luo projektille virtuaaliympäristö komennoilla:
-*python3 -m venv venv
-*source venv/bin/activate
-*Huom! Sinun pitää olla projektin kansiossa luodessasi ympäristön
+* python3 -m venv venv
+* source venv/bin/activate
+* Huom! Sinun pitää olla projektin kansiossa luodessasi ympäristön
 3. Virtuaaliympäristön luomisen jälkeen voit ladata projektissa käytettävät riippuvuudet komennolla:
 * pip install -r requirements.txt
 4. Käynnistä sovellus paikallisesti komennolla:
@@ -16,8 +16,8 @@ Sovellus vaatii toimiakseen python3 sekä sqlite3. Python tarvitsee lisäksi lis
 5. Siirry komentorivisi ilmoittamaan osoitteeseen selaimessa. Voit halutessasi luoda käyttäjän sivun kautta, tai käyttämällä sqliteä.
 
 Admin-tunnukset voi luoda vain sqliten kautta komennoilla:
-*sqlite3 harjoitukset.db
-*INSERT INTO account(name, username, password, role) VALUES('admin', 'admin', '*salasanasi*', 'ADMIN')
+* sqlite3 harjoitukset.db
+* INSERT INTO account(name, username, password, role) VALUES('admin', 'admin', '*salasanasi*', 'ADMIN')
 
 ## Heroku:
 
@@ -31,9 +31,9 @@ Admin-tunnukset voi luoda vain sqliten kautta komennoilla:
 * git commit -m "*viestisi*"
 * git push heroku master
 5. Vaihdetaan herokun tietokanta Postgresql:ksi, jotta tieto pysyy tallennettuna:
-*heroku config:set HEROKU=1
-*heroku addons:add heroku-postgresql:hobby-dev
+* heroku config:set HEROKU=1
+* heroku addons:add heroku-postgresql:hobby-dev
 6. Admin-tunnusten luominen herokussa:
-*heroku pg:psql
-*INSERT INTO account (name, username, password, role) VALUES ('admin', 'admin', '*salasanasi*', 'ADMIN');
+* heroku pg:psql
+* INSERT INTO account (name, username, password, role) VALUES ('admin', 'admin', 'salasanasi', 'ADMIN');
 
