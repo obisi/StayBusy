@@ -1,4 +1,4 @@
-#Asennusohjeet (Mac OS X)
+# Asennusohjeet (Mac OS X)
 
 Sovellus vaatii toimiakseen python3 sekä sqlite3. Python tarvitsee lisäksi lisäosat pip ja venv.
 
