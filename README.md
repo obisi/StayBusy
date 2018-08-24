@@ -13,6 +13,8 @@ Tietokantaan tulee kaksi CRUD-taulua, kuntosaliharjoitukset ja juoksut. Monesta 
 
 Sovelluksessa on mahdollisuus kirjautua, ja luoda uusi käyttäjä. Sovellukseen on luotu valmiiksi käyttäjä hello salasanalla world.
 
+Admin-tunnuksia voi testata käyttäjänimellä admin ja salasanalla terasmies.
+
 
 
 [Heroku](https://staybisi.herokuapp.com)
