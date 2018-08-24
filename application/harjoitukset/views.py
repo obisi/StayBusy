@@ -154,7 +154,7 @@ def sali_updateform(sali_id):
 @app.route("/kuntosaliharjoitukset/<sali_id>/", methods=["POST"])
 @login_required()
 def sali_edit(sali_id):
-    form = JuoksuForm(request.form)
+    form = SaliForm(request.form)
     sali = Salikerta.query.get(sali_id)
 
     if not form.validate():
