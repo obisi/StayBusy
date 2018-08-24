@@ -24,10 +24,10 @@ def harjoitukset_index():
         salit = User.kaikki_salikerrat(current_user.id)
     jt = []
     for j in juoksut:
-        jt.append(juoksu_print(j['id'], j['pvm'], str(j['aika'])[:-7], j['matka']))
+        jt.append(juoksu_print(j['id'], j['pvm'], j['aika'], j['matka']))
     st = []
     for s in salit:
-        st.append(sali_print(s['id'], s['pvm'], str(s['aika'])[:-7]))
+        st.append(sali_print(s['id'], s['pvm'], s['aika']))
     return render_template("/harjoitukset/list.html", juoksut = jt, salit = st)
 
 
