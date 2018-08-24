@@ -19,15 +19,23 @@ def harjoitukset_index():
     if current_user.role=="ADMIN":
         juoksut = Juoksu.query.all()
         salit = Salikerta.query.all()
+        jt = []
+        for j in juoksut:
+            jt.append(juoksu_print(j.id, j.pvm, j.aika, j.aika))
+        st = []
+        for s in salit:
+            st.append(sali_print(s.id, s.pvm, s.aika))
     else:
         juoksut = User.kaikki_juoksut(current_user.id)
         salit = User.kaikki_salikerrat(current_user.id)
-    jt = []
-    for j in juoksut:
-        jt.append(juoksu_print(j['id'], j['pvm'], j['aika'], j['matka']))
-    st = []
-    for s in salit:
-        st.append(sali_print(s['id'], s['pvm'], s['aika']))
+        jt = []
+        for j in juoksut:
+            jt.append(juoksu_print(j['id'], j['pvm'], j['aika'], j['matka']))
+        st = []
+        for s in salit:
+            st.append(sali_print(s['id'], s['pvm'], s['aika']))
+
+    
     return render_template("/harjoitukset/list.html", juoksut = jt, salit = st)
 
 
