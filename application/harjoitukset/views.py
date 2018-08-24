@@ -85,11 +85,6 @@ def juoksu_single(juoksu_id):
 def juoksu_updateform(juoksu_id):
     j = Juoksu.query.get(juoksu_id)
     form = JuoksuForm(obj=j)
-    # m, s = divmod(j.aika, 60)
-    # h, m = divmod(m, 60)
-    # form.tunnit.data = h
-    # form.minuutit.data = m
-    # form.sekunnit.data = s
     return render_template("juoksuharjoitukset/edit.html", j=j, form = form)
 
 @app.route("/juoksuharjoitukset/<juoksu_id>/", methods=["POST"])
@@ -101,13 +96,9 @@ def juoksu_edit(juoksu_id):
     if not form.validate():
         return render_template("juoksuharjoitukset/edit.html", j=j, form = form)
 
-    #j.pvmstring =  str(form.pvm.data).replace('-', '.')
     j.pvm = form.pvm.data
     j.matka = form.matka.data
     j.aika = form.aika.data
-    #j.aika = form.tunnit.data * 3600 + form.minuutit.data * 60 + form.sekunnit.data
-    #j.aikastring = str(datetime.timedelta(seconds=j.aika))
-    #j.matkastring = str(round(j.matka / 1000, 2)) + " km"
 
     db.session().commit()
     return redirect(url_for("harjoitukset_index"))
@@ -126,7 +117,6 @@ def juoksut_create():
     if not form.validate():
         return render_template("juoksuharjoitukset/new.html", form = form)
     j = Juoksu(form.pvm.data, form.matka.data, form.aika.data)
-    #j = Juoksu(form.pvm.data, form.matka.data, form.tunnit.data, form.minuutit.data, form.sekunnit.data)
     j.account_id = current_user.id
 
     db.session().add(j)
@@ -159,11 +149,6 @@ def sali_single(sali_id):
 def sali_updateform(sali_id):
     sali = Salikerta.query.get(sali_id)
     form = SaliForm(obj=sali)
-    # m, s = divmod(sali.aika, 60)
-    # h, m = divmod(m, 60)
-    # form.tunnit.data = h
-    # form.minuutit.data = m
-    # form.sekunnit.data = s
     return render_template("kuntosaliharjoitukset/edit.html", sali=sali, form = form)
 
 @app.route("/kuntosaliharjoitukset/<sali_id>/", methods=["POST"])
@@ -175,12 +160,8 @@ def sali_edit(sali_id):
     if not form.validate():
         return render_template("kuntosaliharjoitukset/edit.html", sali=sali, form = form)
 
-    # sali.pvmstring =  str(form.pvm.data).replace('-', '.')
     sali.pvm = form.pvm.data
     sali.aika = form.aika.data
-    # sali.aika = form.tunnit.data * 3600 + form.minuutit.data * 60 + form.sekunnit.data
-    # sali.aikastring = str(datetime.timedelta(seconds=sali.aika))
-
     db.session().commit()
     return redirect(url_for("harjoitukset_index"))
 
@@ -199,7 +180,6 @@ def sali_create():
         return render_template("kuntosaliharjoitukset/new.html", form = form)
     
     s = Salikerta(form.pvm.data, form.aika.data)
-    #s = Salikerta(form.pvm.data, form.tunnit.data, form.minuutit.data, form.sekunnit.data)
     s.account_id = current_user.id
 
     db.session().add(s)
