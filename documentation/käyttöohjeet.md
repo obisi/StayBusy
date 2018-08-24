@@ -14,9 +14,9 @@ Sovelluksessa on eri toimintoja.
 Etusivulla näkyy kaikille koko tietokannan pisin juoksu, sekä käyttäjän oma pisin, jos sellainen on olemassa.
 
 Selaa harjoituksia linkin takaa löytyy listaus kaikista käyttäjän omista harjoituksista. Näitä voi halutessaan muokata, katsoa tarkempia tietoja, tai poistaa.
-*Lisätietoja-painikkeen takaa näkee juoksun keskinopeuden, ja sen pohjalta laskettu coopermatka sekä maratonaika.
-*Muokkaa-painikkeella käyttäjä voi muokata juoksunsa tai saliharjoituksensa tietoja.
-*Poista-nappi poistaa kyseisen harjoituksen tietokannasta.
+* Lisätietoja-painikkeen takaa näkee juoksun keskinopeuden, ja sen pohjalta laskettu coopermatka sekä maratonaika.
+* Muokkaa-painikkeella käyttäjä voi muokata juoksunsa tai saliharjoituksensa tietoja.
+* Poista-nappi poistaa kyseisen harjoituksen tietokannasta.
 
 Lisää juoksu tai kuntosaliharjoitus linkin takaa voi lisätä uuden harjoituksen.
 
