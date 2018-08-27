@@ -1,4 +1,4 @@
-## Tavoitteet sovellukselle:
+## Kokemuksia kurssin aikana:
 
 Tarkoituksena oli tehdä sovellus, joka olisi piirtänyt kaavioita käyttäjän kehityksestä. Projektin edetessä 
 jouduin kuitenkin laskemaan tavoitteita, jotta saisin toiminnallisuudet siihen kuntoon, että niitä kehtaa esitellä. Tällä hetkellä
