@@ -7,7 +7,7 @@ Selaimessa toimiva harjoitustietokanta lenkkeilylle ja kuntosaliharjoittelulle. 
 Esimerkiksi:
 * Selaamaan lenkkien pituuksien kehitystä 
 * Juostut kilometrit tietyllä aikavälillä
-* Penkkipunneruksen teoreettisen maksimin kasvamista.
+* Penkkipunneruksen teoreettisen maksimin kasvamista. (to do)
 
 Tietokantaan tulee kaksi CRUD-taulua, kuntosaliharjoitukset ja juoksut. Monesta moneen suhde tulee taulujen kuntosaliharjoitus ja kuntosaliliike välille.
 
