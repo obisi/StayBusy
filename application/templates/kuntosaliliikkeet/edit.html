@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<form method="POST" action="{{ url_for('saliliike_edit', liike_id = liike.id) }}">
+  <table>
+    <div class="form-group row">
+    {{ form.nimi.label }}
+    <div style="margin-left:20px">
+    {{ form.nimi }}
+    </div>
+        <ul>
+          {% for error in form.nimi.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="form-group row">
+      <input type="submit" value="Tallenna"/>
+    </div>
+    </table>
+</form>
+{% endblock %}

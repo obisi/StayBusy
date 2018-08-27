@@ -30,6 +30,9 @@
           <li class="nav-item">
               <a class="nav-link" href="{{ url_for('sali_form') }} ">Lisää kuntosaliharjoitus</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('saliliike_list') }} ">Lisää kuntosaliliike</a>
+            </li>
             {% endif %}
             {% if current_user.role == "USER" or  current_user.role == "ADMIN" %}
             <li class="nav-item">

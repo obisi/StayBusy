@@ -3,22 +3,27 @@ from application.models import Harjoitus
 from application.models import Base
 import datetime
 
-""" liikkeet_table = db.Table('harjoitus_liike',
-    db.Column("id", db.Integer, primary_key=True),
-    db.Column("salikerta_id", db.Integer, 
-        db.ForeignKey("salikerta.id")),
-    db.Column("saliliike_id", db.Integer, 
-        db.ForeignKey("saliliike.id")),
-    db.Column("toistot", db.Integer, nullable=False),
-    db.Column("painot", db.Integer, nullable=False)
-) """
+# class Harjoitus_Liike(Base):
+#     __tablename__ = 'harjoitus_liike'
+
+#     Salikerta_id = db.Column(db.Integer, db.ForeignKey('Salikerta.id'), primary_key=True)
+#     Saliliike_id = db.Column(db.Integer, db.ForeignKey('Saliliike.id'), primary_key=True)
+#     painot = db.Column(db.Integer)
+#     toistot = db.Column(db.Integer)
+
+#     Salikerta = db.relationship("Salikerta", back_populates='Saliliike', lazy=True)
+#     Saliliike = db.relationship("Saliliike", back_populates='Salikerta', lazy=True)
+
+#     def __init__(self, salikerta, saliliike, painot, toistot):
+#         self.Salikerta_id = salikerta.id
+#         self.Saliliike_id = saliliike.id
+#         self.painot = painot
+#         self.toistot = toistot
 
 class Salikerta(Harjoitus):
 
-
-    
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
-#     liikkeet = db.relationship('Saliliike', secondary=liikkeet_table, backref=db.backref('harjoitukset', lazy='dynamic'))
+    # harjoitus_liike = db.relationship('Harjoitus_Liike', back_populates='Salikerta', cascade='delete', lazy=True)
 
 
     def __init__(self,pvm, aika):

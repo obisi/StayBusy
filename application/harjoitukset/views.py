@@ -4,11 +4,15 @@ from application.auth.models import User
 from application.juoksuharjoitukset.models import Juoksu
 from application.juoksuharjoitukset.forms import JuoksuForm
 from application.kuntosaliharjoitukset.models import Salikerta
+# from application.kuntosaliharjoitukset.models import Harjoitus_Liike
 from application.kuntosaliharjoitukset.forms import SaliForm
+#from application.kuntosaliharjoitukset.forms import Salikerta_LiikeForm
+from application.kuntosaliliikkeet.models import Saliliike
+from application.kuntosaliliikkeet.forms import SaliliikeForm
 from application.harjoitukset.forms import Pvmhaku_Form
 from flask_login import current_user
 from application.models import juoksu_print, sali_print
-import datetime
+from datetime import datetime
 
 
 
@@ -115,13 +119,14 @@ def juoksu_edit(juoksu_id):
 @app.route("/juoksuharjoitukset/new/")
 @login_required(role="USER")
 def juoksut_form():
-    return render_template("juoksuharjoitukset/new.html", form = JuoksuForm())
+    form = JuoksuForm(pvm = datetime.today().date())
+    return render_template("juoksuharjoitukset/new.html", form = form)
 
 @app.route("/juoksuharjoitukset/", methods=["POST"])
 @login_required(role="USER")
 def juoksut_create():
     form = JuoksuForm(request.form)
-
+    
     if not form.validate():
         return render_template("juoksuharjoitukset/new.html", form = form)
     j = Juoksu(form.pvm.data, form.matka.data, form.aika.data)
@@ -194,3 +199,85 @@ def sali_create():
     db.session().commit()
 
     return redirect(url_for("harjoitukset_index"))
+
+@app.route("/kuntosaliharjoitukset/liikkeet/")
+@login_required(role="USER")
+def haroitus_liike_form():
+    return render_template("kuntosaliharjoitukset/new.html", form = Salikerta_LiikeForm())
+
+@app.route("/kuntosaliharjoitukset/liikkeet/", methods=["POST"])
+@login_required(role="USER")
+def harjoitus_liike_create():
+    form = Salikerta_LiikeForm(request.form)
+
+    if not form.validate():
+        return render_template("kuntosaliharjoitukset/new.html", form = form)
+    
+    s = Salikerta(form.pvm.data, form.aika.data)
+    s.account_id = current_user.id
+
+    db.session().add(s)
+    db.session().commit()
+
+    return redirect(url_for("harjoitukset_index"))
+
+
+# Saliliikkeille toiminnallisuudet:
+
+@app.route("/kuntosaliliikkeet/<liike_id>/delete", methods=["POST"])
+@login_required()
+def saliliike_delete(liike_id):
+    s = Saliliike.query.get(liike_id)
+
+    db.session.delete(s)
+    db.session().commit()
+
+    return redirect(url_for("saliliike_list"))
+
+
+@app.route("/kuntosaliliikkeet/<liike_id>/", methods=["GET"])
+@login_required()
+def saliliike_updateform(liike_id):
+    liike = Saliliike.query.get(liike_id)
+    form = SaliliikeForm(obj=liike)
+    return render_template("kuntosaliliikkeet/edit.html", liike=liike, form = form)
+
+@app.route("/kuntosaliliikkeet/<liike_id>/", methods=["POST"])
+@login_required()
+def saliliike_edit(liike_id):
+    form = SaliliikeForm(request.form)
+    liike = Saliliike.query.get(liike_id)
+
+    if not form.validate():
+        return render_template("kuntosaliliikkeet/edit.html", liike=liike, form = form)
+
+    liike.nimi = form.nimi.data
+    db.session().commit()
+
+    liikkeet = Saliliike.query.all()
+    return render_template("kuntosaliliikkeet/list.html", saliliikkeet=liikkeet, form = SaliliikeForm())
+
+
+
+@app.route("/kuntosaliliikkeet/list/")
+@login_required(role="USER")
+def saliliike_list():
+    return render_template("kuntosaliliikkeet/list.html", saliliikkeet = Saliliike.query.all(), form = SaliliikeForm())
+
+
+@app.route("/kuntosaliliikkeet/new/", methods=["POST"])
+@login_required(role="USER")
+def saliliike_create():
+    form = SaliliikeForm(request.form)
+
+    if not form.validate():
+        return render_template("kuntosaliliikkeet/list.html", saliliikkeet = Saliliike.query.all(), form = form)
+    
+    s = Saliliike(form.nimi.data)
+
+    db.session().add(s)
+    db.session().commit()
+
+    liikkeet = Saliliike.query.all()
+
+    return render_template("kuntosaliliikkeet/list.html", saliliikkeet=liikkeet, form = SaliliikeForm())
