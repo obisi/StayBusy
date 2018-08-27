@@ -27,4 +27,4 @@ Admin-tunnuksia voi testata käyttäjänimellä admin ja salasanalla terasmies.
 
 [Asennusohjeet](https://github.com/obisi/StayBusy/blob/master/documentation/asennusohjeet.md)
 
-[Kokemuksia kurssista] (https://github.com/obisi/StayBusy/blob/master/documentation/kokemuksia.md)
+[Kokemuksia kurssista](https://github.com/obisi/StayBusy/blob/master/documentation/kokemuksia.md)
