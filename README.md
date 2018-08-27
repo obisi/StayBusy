@@ -21,7 +21,7 @@ Admin-tunnuksia voi testata käyttäjänimellä admin ja salasanalla terasmies.
 
 [User stories](https://github.com/obisi/StayBusy/blob/master/documentation/Userstories.md)
 
-[Tietokantakaavio](https://github.com/obisi/StayBusy/blob/master/documentation/StayBisiTietokantakaavio.jpg)
+[Tietokantakaavio](https://github.com/obisi/StayBusy/blob/master/documentation/StayBisiTietokantakaavio2.jpg)
 
 [Käyttöohjeet](https://github.com/obisi/StayBusy/blob/master/documentation/käyttöohjeet.md)
 
