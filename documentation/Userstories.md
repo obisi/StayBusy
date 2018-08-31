@@ -45,6 +45,19 @@ CREATE TABLE salikerta (
 	PRIMARY KEY (id),
 	FOREIGN KEY(account_id) REFERENCES account (id)
 )
+
+CREATE TABLE salikerta_liike (
+	id INTEGER NOT NULL,
+	date_created DATETIME,
+	date_modified DATETIME,
+	salikerta_id INTEGER,
+	saliliike_id INTEGER,
+	painot DECIMAL(6, 2) NOT NULL,
+	toistot INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(salikerta_id) REFERENCES salikerta (id),
+	FOREIGN KEY(saliliike_id) REFERENCES saliliike (id)
+)
 ```
 
 ### Käyttäjänä voin:
@@ -114,6 +127,22 @@ INSERT INTO salikerta (date_created, date_modified, pvm, aika, account_id) VALUE
 INSERT INTO saliliike (date_created, date_modified, nimi) VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <nimi>)
 
 ```
+
+* Lisätä uuden liikkeen liitostauluun salikerta-saliliike
+
+```sql
+INSERT INTO salikerta_liike (salikerta_liike.id, date_created, date_modified, painot, toistot, salikerta_id, saliliike_id) VALUES (<id>, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, <painot>, <toistot>, <salikerta_id>, <saliliike_id>)
+
+```
+
+* Hakea salikerran kaikki liikkeet, jokaiselle riville tulee liikkeen nimi, toistot ja painot:
+
+```sql
+SELECT Salikerta_liike.id, Saliliike.nimi, Salikerta_liike.painot, Salikerta_liike.toistot FROM Salikerta_liike
+INNER JOIN Salikerta ON Salikerta_liike.salikerta_id = Salikerta.id INNER JOIN Saliliike ON Salikerta_liike.saliliike_id = Saliliike.id WHERE Salikerta.id = : <salikerta_id> GROUP BY Salikerta_liike.id, Saliliike.nimi
+
+```
+
 
 
 ### Adminina voin:
