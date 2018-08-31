@@ -18,8 +18,8 @@ db = SQLAlchemy(app)
 
 
 from os import urandom
-app.config["SECRET_KEY"] = urandom(32)
-#app.config["SECRET_KEY"] = 'supersecret'
+#app.config["SECRET_KEY"] = urandom(32)
+app.config["SECRET_KEY"] = 'supersecret'
 
 from flask_login import LoginManager
 login_manager = LoginManager()
@@ -58,6 +58,7 @@ from application import views
 from application.juoksuharjoitukset import models
 from application import models
 from application.kuntosaliharjoitukset import models
+from application.kuntosaliliikkeet import models
 
 from application.harjoitukset import views
 
@@ -75,3 +76,4 @@ try:
     db.create_all()
 except:
     pass
+

@@ -20,4 +20,23 @@
       </td>
     </tr>
   </table>
+
+  <table>
+    <thhead>Tehdyt Liikkeet:</thhead>
+  <tr>
+    <th>Nimi</th>
+    <th>Painot</th>
+    <th>Toistot</th>
+    <th>1RM</th>
+  </tr>
+  {% for s_liike in sk_liikkeet %}
+  <tr>
+    <td>{{ s_liike.liike }}</td>
+    <td>{{ s_liike.painot }} </td>
+    <td>{{ s_liike.toistot }}</td>
+    <td>{{ s_liike.orm }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 {% endblock %}

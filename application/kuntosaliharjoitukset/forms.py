@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
 from application import app, db
-#from application.kuntosaliharjoitukset.models import Harjoitus_Liike
+from application.kuntosaliliikkeet.models import Saliliike
 from wtforms import StringField, validators
 from wtforms import IntegerField, validators
 from wtforms import DateField, validators
 from wtforms import TimeField, validators
 from wtforms import SelectField, validators
+from wtforms import DecimalField, validators
 
 class SaliForm(FlaskForm):
     pvm = DateField("Päivämäärä (pp.kk.vvvv)", format='%d.%m.%Y')
@@ -14,14 +15,22 @@ class SaliForm(FlaskForm):
     class Meta:
         csrf = False
 
-# class Salikerta_LiikeForm(FlaskForm):
-#     saliliikkeet = Saliliike.query.all()
-#     liikkeet = []
-#     for liike in saliliikkeet:
-#         liikkeet.append(liike.nimi)
-#     liike = SelectField('Liike', choices = liikkeet)
-#     paino = IntegerField('Paino: ')
-#     toistot = IntegerField('Toistot: ')
+# Ei toiminut muuten:
+class MySelectField(SelectField):
+    def pre_validate(self, form):
+        for v, _ in self.choices:
+            if isinstance(v, int):
+                break
+        else:
+            raise ValueError(self.gettext('Not a valid choice'))
 
-#     class Meta:
-#         csrf = False
+
+
+class Salikerta_LiikeForm(FlaskForm):
+    
+    liike = MySelectField(choices=Saliliike.hae_kaikki_liikkeet(),label="Liike: ")
+    painot = DecimalField("Paino(kg): ", [validators.NumberRange(min=0, max=10000, message="Virheellinen syöte")], places=2)
+    toistot = IntegerField('Toistot: ')
+
+    class Meta:
+        csrf = False

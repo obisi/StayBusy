@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<form method="POST" action="{{ url_for('salikerta_liike_create', sali_id = sali_id) }}">
+  <table>
+    <div class="form-group row">
+    {{ form.liike.label }}
+    <div style="margin-left:20px">
+    {{ form.liike }}
+    </div>
+        <ul>
+          {% for error in form.liike.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+  </div>
+  <div class="form-group row">
+      {{ form.painot.label}}
+      <div style="margin-left:28px">
+        </div>
+      {{ form.painot }}
+    <ul>
+      {% for error in form.painot.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+    <div class="form-group row">
+        {{ form.toistot.label}}
+        <div style="margin-left:20px">
+          </div>
+        {{ form.toistot }}
+      <ul>
+        {% for error in form.toistot.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </table>
+
+    <div class="form-group row">
+      <input type="submit" value="Tallenna"/>
+    </div>
+
+</form>
+
+<table>
+    <thhead>Tehdyt Liikkeet:</thhead>
+  <tr>
+    <th>Nimi</th>
+    <th>Painot</th>
+    <th>Toistot</th>
+  </tr>
+  {% for s_liike in sk_liikkeet %}
+  <tr>
+    <td>{{ s_liike.liike }}</td>
+    <td>{{ s_liike.painot }} </td>
+    <td>{{ s_liike.toistot }}</td>
+
+    <td>
+       <a href= "{{ url_for('salikerta_liike_updateform', salikerta_liike_id = s_liike.id) }}"><button>Muokkaa</button></a>
+       
+    </td>
+    <td>
+      <form method="POST" action="{{ url_for('salikerta_liike_delete', salikerta_liike_id = s_liike.id) }}">
+        <input type="submit" value="Poista"/>
+        </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href= "{{ url_for('sali_single', sali_id = sali_id) }}">Valmis</a>
+
+
+
+{% endblock %}

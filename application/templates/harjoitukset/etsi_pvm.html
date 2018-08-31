@@ -37,25 +37,21 @@
       <th>Päivämäärä</th>
       <th>Matka</th>
       <th>Aika</th>
+      {% if current_user.role == "ADMIN" %}
+      <th>Kenen</th>
+      {% endif %}
     </tr>
     {% for juoksu in juoksut %}
     <tr>
       <td>{{ juoksu.pvmstring }}</td>
       <td>{{ juoksu.matkastring }}</td>
       <td>{{ juoksu.aikastring }} </td>
+      {% if current_user.role == "ADMIN" %}
+      <td>{{ juoksu.user }}</td>
+      {% endif %}
       <td>
-         <a href= "{{ url_for('juoksu_updateform', juoksu_id = juoksu.id) }}"><button>Muokkaa</button></a>
-         
-      </td>
-      <td>
-        <a href= "{{ url_for('juoksu_single', juoksu_id = juoksu.id) }}"><button>Lisätietoja</button></a>
-        
+        <a href= "{{ url_for('juoksu_single', juoksu_id = juoksu.id) }}"><button>Lisätietoja</button></a>       
      </td>
-      <td>
-        <form method="POST" action="{{ url_for('juoksu_delete', juoksu_id = juoksu.id) }}">
-          <input type="submit" value="Poista"/>
-	      </form>
-      </td>
     </tr>
     {% endfor %}
   </table>
@@ -65,24 +61,21 @@
     <tr>
       <th>Päivämäärä</th>
       <th>Aika</th>
+      {% if current_user.role == "ADMIN" %}
+      <th>Kenen</th>
+      {% endif %}
     </tr>
     {% for sali in salit %}
     <tr>
       <td>{{ sali.pvmstring }}</td>
       <td>{{ sali.aikastring }} </td>
-      <td>
-         <a href= "{{ url_for('sali_updateform', sali_id = sali.id) }}"><button>Muokkaa</button></a>
-         
-      </td>
+      {% if current_user.role == "ADMIN" %}
+      <td>{{ sali.user }}</td>
+      {% endif %}
       <td>
         <a href= "{{ url_for('sali_single', sali_id = sali.id) }}"><button>Lisätietoja</button></a>
         
      </td>
-      <td>
-        <form method="POST" action="{{ url_for('sali_delete', sali_id = sali.id) }}">
-          <input type="submit" value="Poista"/>
-	      </form>
-      </td>
     </tr>
     {% endfor %}
   </table>
