@@ -1,0 +1,30 @@
+### Tietokantataulut
+
+Tietokanta on muodostettu neljästä tietokantataulusta, ja yhdestä liitostaulusta. 
+
+## Tietokantataulut:
+* Käyttäjätaulu
+* Juoksutaulu
+* Kuntosalitaulu
+* Kuntosaliliike
+
+Lisäksi on liitostaulu kuntosalin ja kuntosaliliikkeen välille
+
+# Käyttäjätaulu:
+Taulussa on tieto käyttäjistä. Attribuutteja id, nimi, käyttäjänimi, salasana ja rooli. Rooleja on kaksi, User ja Admin. Kaikki rekisteröityvät
+käyttäjät ovat automaattisesti Usereita, Admin täytyy lisätä sql-komennolla sovelluksen ulkopuolelta. Molemmille käyttäjille on
+hieman omanlainen näkymä.
+
+# Juoksutaulu:
+Tieto juoksuista. Attribuutteja id, päivämäärä, juostu matka sekä juoksun kesto.
+
+# Salikerta:
+Tieto salikerroista. Atribuutteina id, päivämäärä ja kesto
+
+# Saliliike:
+Tieto kaikista saliliikkeistä. Vain id ja liikkeen nimi.
+
+# Liitostaulu Salikerta_liike:
+Liitostaulu Salikerran ja Saliliikkeen välillä. Attribuutteina id, salikerran id, saliliikkeen id, toistot ja painot.
+
+Tietokanta on normalisoitu, sillä monesta moneen suhde saliliikkeen ja salikerran välillä on toteutettu liitostaululla.
