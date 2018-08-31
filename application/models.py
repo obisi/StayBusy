@@ -1,6 +1,5 @@
 from application import db
 import datetime
-from decimal import *
 
 
 class Base(db.Model):
@@ -18,6 +17,8 @@ class Harjoitus(Base):
 
     pvm = db.Column(db.Date, nullable=False)
     aika = db.Column(db.Time, nullable=False)
+
+# Tulostettavat versiot, jotka siirretään html-puolelle selkeämmän ulkoasun takia
 
 class juoksu_print():
     def __init__(self, id, pvm, aika, matka):

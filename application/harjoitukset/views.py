@@ -18,7 +18,7 @@ from datetime import datetime as dt
 import datetime
 
 
-
+# Listaa kaikki juoksut adminille, tai kaikki käyttäjän juoksut käyttäjälle
 
 @app.route("/harjoitukset/", methods=["GET"])
 @login_required()
@@ -28,10 +28,10 @@ def harjoitukset_index():
         salit = Salikerta.query.all()
         jt = []
         for j in juoksut:
-            jt.append(juoksu_print_admin(j.id, j.pvm, j.aika, j.aika, User.kenen_juoksu(j.id)[0]))
+            jt.append(juoksu_print_admin(j.id, j.pvm, j.aika, j.aika, Juoksu.kenen_juoksu(j.id)[0]))
         st = []
         for s in salit:
-            st.append(sali_print_admin(s.id, s.pvm, s.aika, User.kenen_sali(s.id)[0]))
+            st.append(sali_print_admin(s.id, s.pvm, s.aika, Salikerta.kenen_sali(s.id)[0]))
     else:
         juoksut = User.kaikki_juoksut(current_user.id)
         salit = User.kaikki_salikerrat(current_user.id)
@@ -46,11 +46,13 @@ def harjoitukset_index():
     return render_template("/harjoitukset/list.html", juoksut = jt, salit = st)
 
 
+# Luo päivämäärähakuformin
 @app.route("/harjoitukset/etsi_pvm/", methods=["GET"])
 @login_required()
 def pvmhaku_form():
     return render_template("harjoitukset/etsi_pvm.html", form=Pvmhaku_Form())
 
+# Hakee päivämäärällä tietokannasta harjoitukset kahden päivämäärän välillä. Adminille kaikki, käyttäjälle vain omansa
 @app.route("/harjoitukset/etsi_pvm/", methods=["POST"])
 @login_required()
 def pvmhaku():
@@ -61,10 +63,10 @@ def pvmhaku():
         juoksut, salit = User.kaikki_harjoitukset_pvm_admin(pvmEka, pvmToka)
         jt = []
         for j in juoksut:
-            jt.append(juoksu_print_admin(j['id'], j['pvm'], str(j['aika'])[:-7], j['matka'], User.kenen_juoksu(j['id'])[0]))
+            jt.append(juoksu_print_admin(j['id'], j['pvm'], str(j['aika'])[:-7], j['matka'], Juoksu.kenen_juoksu(j['id'])[0]))
         st = []
         for s in salit:
-            st.append(sali_print_admin(s['id'], s['pvm'], str(s['aika'])[:-7], User.kenen_sali(s['id'])[0]))
+            st.append(sali_print_admin(s['id'], s['pvm'], str(s['aika'])[:-7], Salikerta.kenen_sali(s['id'])[0]))
     else:
         juoksut, salit = User.kaikki_harjoitukset_pvm(current_user.id, pvmEka, pvmToka)
         jt = []
@@ -78,6 +80,7 @@ def pvmhaku():
 
 # Juoksuille toiminnallisuudet
 
+# Poistaa juoksun tietokannasta
 @app.route("/juoksuharjoitukset/<juoksu_id>/delete", methods=["POST"])
 @login_required()
 def juoksu_delete(juoksu_id):
@@ -88,6 +91,7 @@ def juoksu_delete(juoksu_id):
 
     return redirect(url_for("harjoitukset_index"))
 
+# Näyttää yhden juoksun tiedot, sekä laskee sille coopermatkan ja maratonajan
 @app.route("/juoksuharjoitukset/<juoksu_id>/single", methods=["GET"])
 @login_required()
 def juoksu_single(juoksu_id):
@@ -102,7 +106,7 @@ def juoksu_single(juoksu_id):
     return render_template("juoksuharjoitukset/single.html", juoksu = uj, kmh = str(kmh) + " km/h",
      cooper = str(cooper) + " km", m_aika = m_aika)
 
-
+# Päivitysformin luominen juoksulle
 @app.route("/juoksuharjoitukset/<juoksu_id>/", methods=["GET"])
 @login_required()
 def juoksu_updateform(juoksu_id):
@@ -110,6 +114,7 @@ def juoksu_updateform(juoksu_id):
     form = JuoksuForm(obj=j)
     return render_template("juoksuharjoitukset/edit.html", j=j, form = form)
 
+# Juoksun tietojen editointi
 @app.route("/juoksuharjoitukset/<juoksu_id>/", methods=["POST"])
 @login_required()
 def juoksu_edit(juoksu_id):
@@ -135,13 +140,14 @@ def juoksu_edit(juoksu_id):
      cooper = str(cooper) + " km", m_aika = m_aika)
 
 
-
+# Uuden juoksun formin luominen
 @app.route("/juoksuharjoitukset/new/")
 @login_required(role="USER")
 def juoksut_form():
     form = JuoksuForm(pvm = dt.today().date())
     return render_template("juoksuharjoitukset/new.html", form = form)
 
+# Uuden juoksun luominen tietokantaan
 @app.route("/juoksuharjoitukset/", methods=["POST"])
 @login_required(role="USER")
 def juoksut_create():
@@ -159,6 +165,7 @@ def juoksut_create():
 
 # Saliharjoituksille toiminnallisuudet
 
+# Poistaa yksittäisen saliharjoituksen tietokannasta
 @app.route("/kuntosaliharjoitukset/<sali_id>/delete", methods=["POST"])
 @login_required()
 def sali_delete(sali_id):
@@ -169,17 +176,16 @@ def sali_delete(sali_id):
 
     return redirect(url_for("harjoitukset_index"))
 
+# Näyttää yksittäisen saliharjoituksen ja siihen liittyvät liikkeet liitostaulusta
 @app.route("/kuntosaliharjoitukset/<sali_id>/single", methods=["GET"])
 @login_required()
 def sali_single(sali_id):
     s = Salikerta.query.get(sali_id)
     us = sali_print(s.id, s.pvm, s.aika)
-    liikkeet = User.kaikki_salikerta_liikkeet(s.id)
-    for l in liikkeet:
-        print(l.liike, l.orm)
+    liikkeet = Salikerta_liike.kaikki_salikerta_liikkeet(s.id)
     return render_template("kuntosaliharjoitukset/single.html", sali = us, sk_liikkeet = liikkeet)
 
-
+# päivitysformi saliharjoitukselle
 @app.route("/kuntosaliharjoitukset/<sali_id>/", methods=["GET"])
 @login_required()
 def sali_updateform(sali_id):
@@ -187,6 +193,7 @@ def sali_updateform(sali_id):
     form = SaliForm(obj=sali)
     return render_template("kuntosaliharjoitukset/edit.html", sali=sali, form = form)
 
+# saliharjoituksen päivitys, joka siirtyy lopuksi liitostaulun muokkaukseen
 @app.route("/kuntosaliharjoitukset/<sali_id>/", methods=["POST"])
 @login_required()
 def sali_edit(sali_id):
@@ -199,7 +206,7 @@ def sali_edit(sali_id):
     sali.pvm = form.pvm.data
     sali.aika = form.aika.data
     db.session().commit()
-    liikkeet = User.kaikki_salikerta_liikkeet(sali.id)
+    liikkeet = Salikerta_liike.kaikki_salikerta_liikkeet(sali.id)
 
     form = Salikerta_LiikeForm()
     form.liike.choices = Saliliike.hae_kaikki_liikkeet()
@@ -207,13 +214,14 @@ def sali_edit(sali_id):
     return render_template("salikerta_liike/new.html", sk_liikkeet = liikkeet, 
         sali_id = sali.id, form = form)
 
-
+# uuden saliharjoituksen luontiformi
 @app.route("/kuntosaliharjoitukset/new/", methods=["GET"])
 @login_required(role="USER")
 def sali_form():
     form = SaliForm(pvm = dt.today().date())
     return render_template("kuntosaliharjoitukset/new.html", form = form)
 
+# uuden saliharjoituksen luominen
 @app.route("/kuntosaliharjoitukset/", methods=["POST"])
 @login_required(role="USER")
 def sali_create():
@@ -232,11 +240,12 @@ def sali_create():
 
 # Salikerta_liike toiminnallisuudet:
 
+# uuden rivin lisääminen liitostauluun salikerta - saliliike
 @app.route("/salikerta_liike/<sali_id>/new/", methods=["POST"])
 @login_required(role="USER")
 def salikerta_liike_create(sali_id):
     form = Salikerta_LiikeForm(request.form)
-    liikkeet = User.kaikki_salikerta_liikkeet(sali_id)
+    liikkeet = Salikerta_liike.kaikki_salikerta_liikkeet(sali_id)
     if not form.validate():
         print("tässä formin data: ", form.liike.data)
         form = Salikerta_LiikeForm()
@@ -246,7 +255,7 @@ def salikerta_liike_create(sali_id):
     sl = Salikerta_liike(sali_id, form.liike.data, form.painot.data, form.toistot.data)
     db.session().add(sl)
     db.session().commit()
-    liikkeet = User.kaikki_salikerta_liikkeet(sali_id)
+    liikkeet = Salikerta_liike.kaikki_salikerta_liikkeet(sali_id)
 
     form = Salikerta_LiikeForm()
     form.liike.choices = Saliliike.hae_kaikki_liikkeet()
@@ -254,6 +263,7 @@ def salikerta_liike_create(sali_id):
     return render_template("salikerta_liike/new.html", sk_liikkeet = liikkeet, 
         sali_id = sali_id, form = form)
 
+# rivin poistaminen liitostaulusta
 @app.route("/salikerta_liike/<salikerta_liike_id>/delete", methods=["POST"])
 @login_required()
 def salikerta_liike_delete(salikerta_liike_id):
@@ -263,7 +273,7 @@ def salikerta_liike_delete(salikerta_liike_id):
     db.session.delete(sl)
     db.session().commit()
 
-    liikkeet = User.kaikki_salikerta_liikkeet(salikerta_id)
+    liikkeet = Salikerta_liike.kaikki_salikerta_liikkeet(salikerta_id)
 
     form = Salikerta_LiikeForm()
     form.liike.choices = Saliliike.hae_kaikki_liikkeet()
@@ -271,7 +281,7 @@ def salikerta_liike_delete(salikerta_liike_id):
     return render_template("salikerta_liike/new.html", sk_liikkeet = liikkeet, 
         sali_id = salikerta_id, form = form)
 
-
+# liitostaulun rivin päivitysform
 @app.route("/salikerta_liike/<salikerta_liike_id>/edit", methods=["GET"])
 @login_required()
 def salikerta_liike_updateform(salikerta_liike_id):
@@ -280,6 +290,7 @@ def salikerta_liike_updateform(salikerta_liike_id):
     form.liike.choices = Saliliike.hae_kaikki_liikkeet()
     return render_template("salikerta_liike/edit.html", salikerta_liike=salikerta_liike, form = form)
 
+# liitostaulun rivin päivitys
 @app.route("/salikerta_liike/<salikerta_liike_id>/edit/", methods=["POST"])
 @login_required()
 def salikerta_liike_edit(salikerta_liike_id):
@@ -294,7 +305,7 @@ def salikerta_liike_edit(salikerta_liike_id):
     sl.toistot = form.toistot.data
     sl.painot = form.painot.data
     db.session().commit()
-    liikkeet = User.kaikki_salikerta_liikkeet(sl.salikerta_id)
+    liikkeet = Salikerta_liike.kaikki_salikerta_liikkeet(sl.salikerta_id)
     form = Salikerta_LiikeForm()
     form.liike.choices = Saliliike.hae_kaikki_liikkeet()
     return render_template("salikerta_liike/new.html", sk_liikkeet = liikkeet, 
@@ -303,6 +314,7 @@ def salikerta_liike_edit(salikerta_liike_id):
 
 # Saliliikkeille toiminnallisuudet:
 
+# saliliikkeen poisto tietokannasta
 @app.route("/kuntosaliliikkeet/<liike_id>/delete", methods=["POST"])
 @login_required()
 def saliliike_delete(liike_id):
@@ -313,7 +325,7 @@ def saliliike_delete(liike_id):
 
     return redirect(url_for("saliliike_list"))
 
-
+# saliliikkeen päivitysformin luonti
 @app.route("/kuntosaliliikkeet/<liike_id>/", methods=["GET"])
 @login_required()
 def saliliike_updateform(liike_id):
@@ -321,6 +333,7 @@ def saliliike_updateform(liike_id):
     form = SaliliikeForm(obj=liike)
     return render_template("kuntosaliliikkeet/edit.html", liike=liike, form = form)
 
+# saliliikkeen päivittäminen tietokannasta
 @app.route("/kuntosaliliikkeet/<liike_id>/", methods=["POST"])
 @login_required()
 def saliliike_edit(liike_id):
@@ -336,14 +349,13 @@ def saliliike_edit(liike_id):
     liikkeet = Saliliike.query.all()
     return render_template("kuntosaliliikkeet/list.html", saliliikkeet=liikkeet, form = SaliliikeForm())
 
-
-
+# kaikkien saliliikkeiden listaaminen
 @app.route("/kuntosaliliikkeet/list/")
 @login_required(role="USER")
 def saliliike_list():
     return render_template("kuntosaliliikkeet/list.html", saliliikkeet = Saliliike.query.all(), form = SaliliikeForm())
 
-
+# Uuden saliliikkeen luominen
 @app.route("/kuntosaliliikkeet/new/", methods=["POST"])
 @login_required(role="USER")
 def saliliike_create():

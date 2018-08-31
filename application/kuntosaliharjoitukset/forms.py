@@ -30,7 +30,7 @@ class Salikerta_LiikeForm(FlaskForm):
     
     liike = MySelectField(choices=Saliliike.hae_kaikki_liikkeet(),label="Liike: ")
     painot = DecimalField("Paino(kg): ", [validators.NumberRange(min=0, max=10000, message="Virheellinen syöte")], places=2)
-    toistot = IntegerField('Toistot: ')
+    toistot = IntegerField('Toistot: ', [validators.NumberRange(min=1, max=1000, message="Vähintään 1 toisto")])
 
     class Meta:
         csrf = False
