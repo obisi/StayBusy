@@ -164,7 +164,7 @@ class User(Base):
                      " INNER JOIN Salikerta ON Salikerta_liike.salikerta_id = Salikerta.id "
                      " INNER JOIN Saliliike ON Salikerta_liike.saliliike_id = Saliliike.id "
                      " WHERE Salikerta.id = :salikerta_id "
-                     " GROUP BY Salikerta_liike.id ").params(salikerta_id=salikerta_id)
+                     " GROUP BY Salikerta_liike.id, Saliliike.nimi ").params(salikerta_id=salikerta_id)
         res = db.engine.execute(stmt)
 
         response = []
