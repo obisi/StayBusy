@@ -174,9 +174,9 @@ def sali_delete(sali_id):
 def sali_single(sali_id):
     s = Salikerta.query.get(sali_id)
     us = sali_print(s.id, s.pvm, s.aika)
-    print(s.id)
     liikkeet = User.kaikki_salikerta_liikkeet(s.id)
-    print(liikkeet)
+    for l in liikkeet:
+        print(l.liike, l.orm)
     return render_template("kuntosaliharjoitukset/single.html", sali = us, sk_liikkeet = liikkeet)
 
 
