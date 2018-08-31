@@ -16,10 +16,10 @@ käyttäjät ovat automaattisesti Usereita, Admin täytyy lisätä sql-komennoll
 hieman omanlainen näkymä.
 
 # Juoksutaulu:
-Tieto juoksuista. Attribuutteja id, päivämäärä, juostu matka sekä juoksun kesto.
+Tieto juoksuista. Attribuutteja id, päivämäärä, juostu matka sekä juoksun kesto. Taulusta löytyy CRUD-ominaisuudet.
 
 # Salikerta:
-Tieto salikerroista. Atribuutteina id, päivämäärä ja kesto
+Tieto salikerroista. Atribuutteina id, päivämäärä ja kesto. Taulusta löytyy CRUD-ominaisuudet.
 
 # Saliliike:
 Tieto kaikista saliliikkeistä. Vain id ja liikkeen nimi.
