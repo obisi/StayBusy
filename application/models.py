@@ -38,7 +38,7 @@ class salikerta_liike_print():
         self.liike = liike
         self.painot = str(painot) + " kg"
         self.toistot = toistot
-        self.orm = round(Decimal(painot) * (toistot ** Decimal(0.1), 2))
+        self.orm = round(float(painot) * (toistot ** 0.1), 2))
 
 class sali_print_admin(sali_print):
     def __init__(self, id, pvm, aika, user):
