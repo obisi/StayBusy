@@ -33,8 +33,8 @@ def harjoitukset_index():
         for s in salit:
             st.append(sali_print_admin(s.id, s.pvm, s.aika, Salikerta.kenen_sali(s.id)[0]))
     else:
-        juoksut = User.kaikki_juoksut(current_user.id)
-        salit = User.kaikki_salikerrat(current_user.id)
+        juoksut = Juoksu.kaikki_juoksut(current_user.id)
+        salit = Salikerta.kaikki_salikerrat(current_user.id)
         jt = []
         for j in juoksut:
             jt.append(juoksu_print(j['id'], j['pvm'], j['aika'], j['matka']))
