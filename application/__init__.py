@@ -61,9 +61,6 @@ from application import models
 from application.kuntosaliliikkeet import models
 from application.kuntosaliharjoitukset import models
 
-from application.harjoitukset import views
-
-
 from application.auth import models
 from application.auth import views
 
@@ -77,4 +74,6 @@ try:
     db.create_all()
 except:
     pass
+
+from application.harjoitukset import views
 
