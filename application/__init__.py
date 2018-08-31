@@ -57,8 +57,9 @@ from application import views
 
 from application.juoksuharjoitukset import models
 from application import models
-from application.kuntosaliharjoitukset import models
+
 from application.kuntosaliliikkeet import models
+from application.kuntosaliharjoitukset import models
 
 from application.harjoitukset import views
 
