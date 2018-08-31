@@ -1,5 +1,7 @@
 from application import db
 import datetime
+from decimal import *
+
 
 class Base(db.Model):
 
@@ -36,7 +38,7 @@ class salikerta_liike_print():
         self.liike = liike
         self.painot = str(painot) + " kg"
         self.toistot = toistot
-        self.orm = round(painot * (decimal(toistot) ** 0.1), 2)
+        self.orm = round(painot * (Decimal(toistot) ** 0.1), 2)
 
 class sali_print_admin(sali_print):
     def __init__(self, id, pvm, aika, user):
